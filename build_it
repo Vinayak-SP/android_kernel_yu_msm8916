@@ -1,0 +1,18 @@
+### GCC 4.9.x
+
+### compile kernel
+ARCH=arm CROSS_COMPILE=~/arm-cortex_a15-linux-gnueabihf-linaro_4.9.1-2014.04/bin/arm-gnueabi- make CONFIG_DEBUG_SECTION_MISMATCH=y -j8
+
+echo "checking for compiled kernel..."
+if [ -f arch/arm/boot/zImage ]
+then
+
+echo "generating device tree..."
+./dtbToolCM --force-v2 -o ../final_files/dt.img -s 2048 -p ./scripts/dtc/ ./arch/arm/boot/dts/
+
+### copy zImage
+cp arch/arm/boot/zImage ../final_files/.
+
+echo "DONE"
+
+fi
